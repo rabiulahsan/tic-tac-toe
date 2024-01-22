@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Box from "./Box";
+import FadeAnimations from "../FadeAnimations/FadeAnimations";
 
 /* eslint-disable react/prop-types */
 const Board = () => {
@@ -116,120 +117,137 @@ const Board = () => {
 
   return (
     <>
-      <div className="flex justify-around items-center gap-x-28">
-        <div className="">
-          {!roundOpen && (
-            <>
-              <p className="text-sky-100 font-semibold text-xl text-center">
-                Select Matches in a Round
-              </p>
+      <div className="flex justify-around items-center gap-x-28 mb-[2%]">
+        <FadeAnimations
+          delay={0.5}
+          direction="right"
+          once={false}
+          duration={0.7}
+        >
+          <div className="">
+            {!roundOpen && (
+              <>
+                <p className="text-sky-100 font-semibold text-xl text-center">
+                  Select Matches in a Round
+                </p>
 
-              <div className="w-full mt-2 mb-5">
-                <select
-                  className="block appearance-none w-full bg-slate-700 border border-slate-700 text-sky-200 font-semibold py-3 px-4 rounded leading-tight focus:outline-none focus:bg-slate-700 focus:border-slate-700 focus:text-sky-200"
-                  id="grid-state"
-                  ref={roundRef}
+                <div className="w-full mt-2 mb-5">
+                  <select
+                    className="block appearance-none w-full bg-slate-700 border border-slate-700 text-sky-200 font-semibold py-3 px-4 rounded leading-tight focus:outline-none focus:bg-slate-700 focus:border-slate-700 focus:text-sky-200"
+                    id="grid-state"
+                    ref={roundRef}
+                  >
+                    <option value={3}>3</option>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                  </select>
+                </div>
+                <button
+                  onClick={handleStart}
+                  className="px-6 py-2 text-white text-xl font-semibold rounded-sm bg-sky-500 hover:bg-sky-600"
                 >
-                  <option value={3}>3</option>
-                  <option value={5}>5</option>
-                  <option value={10}>10</option>
-                </select>
-              </div>
-              <button
-                onClick={handleStart}
-                className="px-6 py-2 text-white text-xl font-semibold rounded-sm bg-sky-500 hover:bg-sky-600"
-              >
-                Start
-              </button>
-            </>
-          )}
+                  Start
+                </button>
+              </>
+            )}
 
-          {roundOpen && (
-            <>
-              <p className="text-sky-200 font-semibold text-xl text-center">
-                Round {roundNumber} of {roundMatches}
-              </p>
-              <div className="flex items-center justify-around flex-col mt-7">
-                <p className="text-sky-500 font-semibold text-xl text-center">
-                  X score: {scores.xScore}
+            {roundOpen && (
+              <>
+                <p className="text-sky-200 font-semibold text-xl text-center">
+                  Round {roundNumber} of {roundMatches}
                 </p>
-                <p className="text-orange-500 font-semibold text-xl text-center my-2">
-                  O score: {scores.oScore}
-                </p>
-              </div>
-              <div className="mt-3">
-                {scores.xScore === scores.oScore ? (
-                  <p className="font-semibold text-2xl text-white text-center">
-                    Round Drawn
+                <div className="flex items-center justify-around flex-col mt-7">
+                  <p className="text-sky-500 font-semibold text-xl text-center">
+                    X score: {scores.xScore}
                   </p>
-                ) : scores.oScore > scores.xScore ? (
-                  <p className="text-orange-500 font-semibold text-lg text-center my-2">
-                    Round Winner player
-                    <span className="text-3xl font-semibold"> O</span>
+                  <p className="text-orange-500 font-semibold text-xl text-center my-2">
+                    O score: {scores.oScore}
                   </p>
-                ) : (
-                  <p className="text-sky-500 font-semibold text-lg text-center">
-                    Round Winner player
-                    <span className="text-3xl font-semibold"> X</span>
-                  </p>
-                )}
-              </div>
-            </>
-          )}
-        </div>
-        <div>
-          {!gameComplete && (
-            <div className="my-5">
-              <p className="font-semibold text-2xl text-white text-center">
-                Player&apos;s move {playerX ? "X" : "O"}
-              </p>
-            </div>
-          )}
-          {gameComplete &&
-            (currentWinner ? (
-              <div className="my-5">
-                <p
-                  className={`font-semibold text-2xl  text-center ${
-                    currentWinner === "X" ? "text-sky-500" : "text-orange-500"
-                  }`}
-                >
-                  Winner is player {currentWinner}
-                </p>
-              </div>
-            ) : (
+                </div>
+                <div className="mt-3">
+                  {scores.xScore === scores.oScore ? (
+                    <p className="font-semibold text-2xl text-white text-center">
+                      Round Drawn
+                    </p>
+                  ) : scores.oScore > scores.xScore ? (
+                    <p className="text-orange-500 font-semibold text-lg text-center my-2">
+                      Round Winner player
+                      <span className="text-3xl font-semibold"> O</span>
+                    </p>
+                  ) : (
+                    <p className="text-sky-500 font-semibold text-lg text-center">
+                      Round Winner player
+                      <span className="text-3xl font-semibold"> X</span>
+                    </p>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </FadeAnimations>
+        <FadeAnimations
+          delay={0.5}
+          direction="left"
+          once={false}
+          duration={0.7}
+        >
+          <div>
+            {!gameComplete && (
               <div className="my-5">
                 <p className="font-semibold text-2xl text-white text-center">
-                  Match Drawn
+                  Player&apos;s move {playerX ? "X" : "O"}
                 </p>
               </div>
-            ))}
-          <div className="grid grid-cols-3 gap-2">
-            {board.map((value, idx) => (
-              <Box
-                key={idx}
-                value={value}
-                idx={idx}
-                handleClick={!gameComplete && !value && handleClick}
-              ></Box>
-            ))}
+            )}
+            {gameComplete &&
+              (currentWinner ? (
+                <div className="my-5">
+                  <p
+                    className={`font-semibold text-2xl  text-center ${
+                      currentWinner === "X" ? "text-sky-500" : "text-orange-500"
+                    }`}
+                  >
+                    Winner is player {currentWinner}
+                  </p>
+                </div>
+              ) : (
+                <div className="my-5">
+                  <p className="font-semibold text-2xl text-white text-center">
+                    Match Drawn
+                  </p>
+                </div>
+              ))}
+            <div className="grid grid-cols-3 gap-2">
+              {board.map((value, idx) => (
+                <Box
+                  key={idx}
+                  value={value}
+                  idx={idx}
+                  handleClick={!gameComplete && !value && handleClick}
+                ></Box>
+              ))}
+            </div>
           </div>
+        </FadeAnimations>
+      </div>
+
+      <FadeAnimations delay={0.5} direction="up" once={false} duration={0.7}>
+        <div className=" flex items-center justify-center gap-x-5">
+          <button
+            onClick={handleNewRound}
+            className="px-6 py-2 text-sky-100 text-xl font-semibold rounded bg-slate-700 hover:bg-slate-600"
+          >
+            New Round
+          </button>
+          <button
+            disabled={disable ? true : false}
+            onClick={handleReset}
+            className="px-6 py-2 text-sky-100 text-xl font-semibold rounded bg-slate-700 hover:bg-slate-600 disabled:bg-slate-400"
+          >
+            Reset
+          </button>
         </div>
-      </div>
-      <div className="mt-[2%] flex items-center justify-center gap-x-5">
-        <button
-          onClick={handleNewRound}
-          className="px-6 py-2 text-sky-100 text-xl font-semibold rounded bg-slate-700 hover:bg-slate-600"
-        >
-          New Round
-        </button>
-        <button
-          disabled={disable ? true : false}
-          onClick={handleReset}
-          className="px-6 py-2 text-sky-100 text-xl font-semibold rounded bg-slate-700 hover:bg-slate-600 disabled:bg-slate-400"
-        >
-          Reset
-        </button>
-      </div>
+      </FadeAnimations>
     </>
   );
 };
