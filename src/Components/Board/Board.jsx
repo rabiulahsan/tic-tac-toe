@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Box from "./Box";
 
 /* eslint-disable react/prop-types */
@@ -11,7 +11,8 @@ const Board = () => {
   const [roundMatches, setRoundMatches] = useState();
   const [roundOpen, setRoundOpen] = useState(false);
   let [roundNumber, setRoundNumber] = useState(1);
-  const [roundWinner, setRoundWinner] = useState("");
+  const [disable, setDisable] = useState(false);
+
   //   winning conditions
   const winConditions = [
     [0, 1, 2],
@@ -80,8 +81,15 @@ const Board = () => {
       setRoundNumber(roundNumber + 1);
     }
 
-    console.log(roundNumber);
+    // console.log(roundNumber);
   };
+
+  //disbale reset button
+  useEffect(() => {
+    if (roundMatches == roundNumber) {
+      setDisable(true);
+    }
+  }, [roundMatches, roundNumber]);
 
   //   new round
   const handleNewRound = () => {
@@ -99,7 +107,7 @@ const Board = () => {
     setRoundNumber(1);
     setBoard(Array(9).fill(null));
   };
-  console.log(roundOpen, roundMatches);
+  //   console.log(roundOpen, roundMatches);
 
   return (
     <>
@@ -198,8 +206,9 @@ const Board = () => {
           New Round
         </button>
         <button
+          disabled={disable ? true : false}
           onClick={handleReset}
-          className="px-6 py-2 text-sky-100 text-xl font-semibold rounded bg-slate-700 hover:bg-slate-600"
+          className="px-6 py-2 text-sky-100 text-xl font-semibold rounded bg-slate-700 hover:bg-slate-600 disabled:bg-slate-400"
         >
           Reset
         </button>
