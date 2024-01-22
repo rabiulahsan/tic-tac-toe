@@ -8,7 +8,7 @@ const Board = () => {
   const [gameComplete, setGameComplete] = useState(false);
   const [scores, setScores] = useState({ xScore: 0, oScore: 0 });
   const [currentWinner, setCurrentWinner] = useState("");
-  const [rountMatches, setRoundMatches] = useState();
+  const [roundMatches, setRoundMatches] = useState();
   const [roundOpen, setRoundOpen] = useState(false);
   let [roundNumber, setRoundNumber] = useState(1);
 
@@ -71,55 +71,73 @@ const Board = () => {
   const handleReset = () => {
     setGameComplete(false);
     setBoard(Array(9).fill(null));
-    setRoundNumber(roundNumber + 1);
+
+    if (gameComplete) {
+      setRoundNumber(roundNumber + 1);
+    }
+
     console.log(roundNumber);
   };
 
   const roundRef = useRef(null);
-  const handleResetRound = () => {
+  const handleNewRound = () => {
+    setScores({ xScore: 0, oScore: 0 });
     setRoundOpen(false); //TODO
     setRoundNumber(1);
+    setBoard(Array(9).fill(null));
   };
   const handleStart = () => {
     setRoundMatches(roundRef.current.value);
     setRoundOpen(true);
     setRoundNumber(1);
+    setBoard(Array(9).fill(null));
   };
-  console.log(roundOpen, rountMatches);
+  console.log(roundOpen, roundMatches);
 
   return (
     <>
       <div className="flex justify-around items-center gap-x-28">
         <div className="">
-          <p className="text-sky-100 font-semibold text-xl text-center">
-            Select Matches in a Round
-          </p>
-
-          <div className="w-full mt-2 mb-5">
-            <select
-              className="block appearance-none w-full bg-slate-700 border border-slate-700 text-sky-200 font-semibold py-3 px-4 rounded leading-tight focus:outline-none focus:bg-slate-700 focus:border-slate-700 focus:text-sky-200"
-              id="grid-state"
-              ref={roundRef}
-            >
-              <option value={3}>3</option>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-            </select>
-          </div>
-
           {!roundOpen && (
-            <button
-              onClick={handleStart}
-              className="px-6 py-2 text-white text-xl font-semibold rounded-sm bg-sky-500 hover:bg-sky-600"
-            >
-              Start
-            </button>
+            <>
+              <p className="text-sky-100 font-semibold text-xl text-center">
+                Select Matches in a Round
+              </p>
+
+              <div className="w-full mt-2 mb-5">
+                <select
+                  className="block appearance-none w-full bg-slate-700 border border-slate-700 text-sky-200 font-semibold py-3 px-4 rounded leading-tight focus:outline-none focus:bg-slate-700 focus:border-slate-700 focus:text-sky-200"
+                  id="grid-state"
+                  ref={roundRef}
+                >
+                  <option value={3}>3</option>
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                </select>
+              </div>
+              <button
+                onClick={handleStart}
+                className="px-6 py-2 text-white text-xl font-semibold rounded-sm bg-sky-500 hover:bg-sky-600"
+              >
+                Start
+              </button>
+            </>
           )}
 
           {roundOpen && (
-            <p className="text-sky-100 font-semibold text-xl text-center">
-              Round {roundNumber}
-            </p>
+            <>
+              <p className="text-sky-200 font-semibold text-2xl text-center">
+                Round {roundNumber} of {roundMatches}
+              </p>
+              <div className="flex items-center justify-around flex-col mt-5">
+                <p className="text-sky-500 font-semibold text-xl text-center">
+                  X score: {scores.xScore}
+                </p>
+                <p className="text-orange-500 font-semibold text-xl text-center">
+                  O score: {scores.oScore}
+                </p>
+              </div>
+            </>
           )}
         </div>
         <div>
@@ -162,7 +180,7 @@ const Board = () => {
       </div>
       <div className="mt-[2%] flex items-center justify-center gap-x-5">
         <button
-          onClick={handleResetRound}
+          onClick={handleNewRound}
           className="px-6 py-2 text-sky-100 text-xl font-semibold rounded bg-slate-700 hover:bg-slate-600"
         >
           New Round
