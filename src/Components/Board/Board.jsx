@@ -6,6 +6,8 @@ const Board = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [playerX, setPlayerX] = useState(true);
   const [gameComplete, setGameComplete] = useState(false);
+  //   const [scores, setScores] = useState({ xScore: 0, oScore: 0 });
+  const [currentWinner, setCurrentWinner] = useState("");
 
   const winConditions = [
     [0, 1, 2],
@@ -42,7 +44,7 @@ const Board = () => {
     });
     setBoard(newBoard, ...board);
     const winner = checkWinner(newBoard);
-
+    setCurrentWinner(winner);
     // if (winner) {
     //   if (winner === "O") {
     //     let { oScore } = scores;
@@ -58,16 +60,23 @@ const Board = () => {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-2">
-      {board.map((value, idx) => (
-        <Box
-          key={idx}
-          value={value}
-          idx={idx}
-          handleClick={!value && handleClick}
-        ></Box>
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-3 gap-2">
+        {board.map((value, idx) => (
+          <Box
+            key={idx}
+            value={value}
+            idx={idx}
+            handleClick={!gameComplete && !value && handleClick}
+          ></Box>
+        ))}
+      </div>
+      {currentWinner && (
+        <div className="">
+          <p>Winner is player {currentWinner}</p>
+        </div>
+      )}
+    </>
   );
 };
 
