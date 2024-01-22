@@ -31,6 +31,13 @@ const Board = () => {
         return board[x];
       }
     }
+    // If no winner is found, check if the board is full
+    if (!board.includes(null)) {
+      setGameComplete(true);
+      return null; // No winner, but the board is full
+    }
+
+    return null; // No win
   };
 
   const handleClick = (clickedIdx) => {
@@ -47,19 +54,6 @@ const Board = () => {
 
     setPlayerX(!playerX);
   };
-
-  useEffect(() => {
-    // console.log(board);
-
-    if (!board.includes(null)) {
-      const winner = checkWinner(board);
-      console.log(winner);
-      !winner && setGameComplete(true);
-    }
-
-    // console.log(gameComplete);
-    // console.log(currentWinner);
-  }, [board, gameComplete, currentWinner, checkWinner]);
 
   const handleReset = () => {
     setGameComplete(false);
