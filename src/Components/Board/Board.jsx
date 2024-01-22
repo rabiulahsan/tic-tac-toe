@@ -157,19 +157,23 @@ const Board = () => {
                   O score: {scores.oScore}
                 </p>
               </div>
-              {scores.xScore === scores.oScore ? (
-                <p className="font-semibold text-2xl text-white text-center">
-                  Round Drawn
-                </p>
-              ) : scores.oScore > scores.xScore ? (
-                <p className="text-orange-500 font-semibold text-xl text-center my-2">
-                  Round Winner O
-                </p>
-              ) : (
-                <p className="text-sky-500 font-semibold text-xl text-center">
-                  Round Winner X
-                </p>
-              )}
+              <div className="mt-3">
+                {scores.xScore === scores.oScore ? (
+                  <p className="font-semibold text-2xl text-white text-center">
+                    Round Drawn
+                  </p>
+                ) : scores.oScore > scores.xScore ? (
+                  <p className="text-orange-500 font-semibold text-lg text-center my-2">
+                    Round Winner player
+                    <span className="text-3xl font-semibold"> O</span>
+                  </p>
+                ) : (
+                  <p className="text-sky-500 font-semibold text-lg text-center">
+                    Round Winner player
+                    <span className="text-3xl font-semibold"> X</span>
+                  </p>
+                )}
+              </div>
             </>
           )}
         </div>
