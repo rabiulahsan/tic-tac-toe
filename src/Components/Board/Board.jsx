@@ -49,15 +49,17 @@ const Board = () => {
   };
 
   useEffect(() => {
-    console.log(board);
+    // console.log(board);
 
-    if (board.includes(null)) {
-      setGameComplete(false);
-    } else {
-      setGameComplete(true);
+    if (!board.includes(null)) {
+      const winner = checkWinner(board);
+      console.log(winner);
+      !winner && setGameComplete(true);
     }
-    console.log(gameComplete);
-  }, [board, gameComplete]);
+
+    // console.log(gameComplete);
+    // console.log(currentWinner);
+  }, [board, gameComplete, currentWinner, checkWinner]);
 
   const handleReset = () => {
     setGameComplete(false);
@@ -66,33 +68,29 @@ const Board = () => {
 
   return (
     <>
-      {gameComplete && currentWinner && (
+      {!gameComplete && (
         <div className="my-5">
-          <p
-            className={`font-semibold text-2xl ${
-              currentWinner === "X" ? "text-sky-500" : "text-orange-500"
-            }`}
-          >
-            Winner is player {currentWinner}
+          <p className="font-semibold text-2xl text-white">
+            Player&apos;s move {playerX ? "X" : "O"}
           </p>
         </div>
       )}
-
-      {gameComplete && currentWinner ? (
-        <div className="my-5">
-          <p
-            className={`font-semibold text-2xl ${
-              currentWinner === "X" ? "text-sky-500" : "text-orange-500"
-            }`}
-          >
-            Winner is player {currentWinner}
-          </p>
-        </div>
-      ) : (
-        <div className="my-5">
-          <p className="font-semibold text-2xl text-white">Match Drawn</p>
-        </div>
-      )}
+      {gameComplete &&
+        (currentWinner ? (
+          <div className="my-5">
+            <p
+              className={`font-semibold text-2xl ${
+                currentWinner === "X" ? "text-sky-500" : "text-orange-500"
+              }`}
+            >
+              Winner is player {currentWinner}
+            </p>
+          </div>
+        ) : (
+          <div className="my-5">
+            <p className="font-semibold text-2xl text-white">Match Drawn</p>
+          </div>
+        ))}
       <div className="grid grid-cols-3 gap-2">
         {board.map((value, idx) => (
           <Box
