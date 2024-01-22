@@ -11,7 +11,7 @@ const Board = () => {
   const [roundMatches, setRoundMatches] = useState();
   const [roundOpen, setRoundOpen] = useState(false);
   let [roundNumber, setRoundNumber] = useState(1);
-
+  const [roundWinner, setRoundWinner] = useState("");
   //   winning conditions
   const winConditions = [
     [0, 1, 2],
@@ -144,6 +144,11 @@ const Board = () => {
                   O score: {scores.oScore}
                 </p>
               </div>
+              {scores.xScore === scores.oScore
+                ? "Match Draw"
+                : scores.oScore > scores.xScore
+                ? "O"
+                : "X"}
             </>
           )}
         </div>
