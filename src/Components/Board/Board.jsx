@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Box from "./Box";
 
 /* eslint-disable react/prop-types */
@@ -60,45 +60,81 @@ const Board = () => {
     setBoard(Array(9).fill(null));
   };
 
+  const handleResetRound = () => {};
+  const handleStart = () => {};
+
   return (
     <>
-      {!gameComplete && (
-        <div className="my-5">
-          <p className="font-semibold text-2xl text-white">
-            Player&apos;s move {playerX ? "X" : "O"}
+      <div className="flex justify-around items-center gap-x-28">
+        <div className="">
+          <p className="text-sky-100 font-semibold text-xl">
+            Select Matches in a Round
           </p>
-        </div>
-      )}
-      {gameComplete &&
-        (currentWinner ? (
-          <div className="my-5">
-            <p
-              className={`font-semibold text-2xl ${
-                currentWinner === "X" ? "text-sky-500" : "text-orange-500"
-              }`}
+          <div className="w-full mt-2 mb-5">
+            <select
+              className="block appearance-none w-full bg-slate-700 border border-slate-700 text-sky-200 font-semibold py-3 px-4 rounded leading-tight focus:outline-none focus:bg-slate-700 focus:border-slate-700 focus:text-sky-200"
+              id="grid-state"
             >
-              Winner is player {currentWinner}
-            </p>
+              <option value={3}>3</option>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+            </select>
           </div>
-        ) : (
-          <div className="my-5">
-            <p className="font-semibold text-2xl text-white">Match Drawn</p>
+          <button
+            onClick={handleStart}
+            className="px-6 py-2 text-white text-xl font-semibold rounded-sm bg-sky-500 hover:bg-sky-600"
+          >
+            Start
+          </button>
+        </div>
+        <div>
+          {!gameComplete && (
+            <div className="my-5">
+              <p className="font-semibold text-2xl text-white text-center">
+                Player&apos;s move {playerX ? "X" : "O"}
+              </p>
+            </div>
+          )}
+          {gameComplete &&
+            (currentWinner ? (
+              <div className="my-5">
+                <p
+                  className={`font-semibold text-2xl  text-center ${
+                    currentWinner === "X" ? "text-sky-500" : "text-orange-500"
+                  }`}
+                >
+                  Winner is player {currentWinner}
+                </p>
+              </div>
+            ) : (
+              <div className="my-5">
+                <p className="font-semibold text-2xl text-white text-center">
+                  Match Drawn
+                </p>
+              </div>
+            ))}
+          <div className="grid grid-cols-3 gap-2">
+            {board.map((value, idx) => (
+              <Box
+                key={idx}
+                value={value}
+                idx={idx}
+                handleClick={!gameComplete && !value && handleClick}
+              ></Box>
+            ))}
           </div>
-        ))}
-      <div className="grid grid-cols-3 gap-2">
-        {board.map((value, idx) => (
-          <Box
-            key={idx}
-            value={value}
-            idx={idx}
-            handleClick={!gameComplete && !value && handleClick}
-          ></Box>
-        ))}
+        </div>
       </div>
-      <div className="mt-[2%]">
+      <div className="mt-[2%] flex items-center justify-center gap-x-5">
+        <button
+          onClick={handleResetRound}
+          className="px-6 py-2 text-sky-100 text-xl font-semibold rounded bg-slate-700 hover:bg-slate-600"
+        >
+          New Round
+        </button>
         <button
           onClick={handleReset}
-          className="px-6 py-3 text-sky-200 text-xl font-semibold rounded bg-slate-700"
+          className="px-6 py-2 text-sky-100 text-xl font-semibold rounded bg-slate-700 hover:bg-slate-600"
         >
           Reset
         </button>
