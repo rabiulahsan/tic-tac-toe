@@ -59,8 +59,24 @@ const Board = () => {
     setPlayerX(!playerX);
   };
 
+  const handleReset = () => {
+    setGameComplete(false);
+    setBoard(Array(9).fill(null));
+  };
+
   return (
     <>
+      {gameComplete && currentWinner && (
+        <div className="my-5">
+          <p
+            className={`font-semibold text-2xl ${
+              currentWinner === "X" ? "text-sky-500" : "text-orange-500"
+            }`}
+          >
+            Winner is player {currentWinner}
+          </p>
+        </div>
+      )}
       <div className="grid grid-cols-3 gap-2">
         {board.map((value, idx) => (
           <Box
@@ -71,11 +87,14 @@ const Board = () => {
           ></Box>
         ))}
       </div>
-      {currentWinner && (
-        <div className="">
-          <p>Winner is player {currentWinner}</p>
-        </div>
-      )}
+      <div className="mt-[2%]">
+        <button
+          onClick={handleReset}
+          className="px-6 py-3 text-sky-200 text-xl font-semibold rounded bg-slate-700"
+        >
+          Reset
+        </button>
+      </div>
     </>
   );
 };
