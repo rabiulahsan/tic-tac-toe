@@ -81,9 +81,6 @@ const Board = () => {
     setRoundNumber(1);
   };
   const handleStart = () => {
-    if (roundOpen) {
-      alert("arey bhai"); //TODO
-    }
     setRoundMatches(roundRef.current.value);
     setRoundOpen(true);
     setRoundNumber(1);
@@ -94,9 +91,10 @@ const Board = () => {
     <>
       <div className="flex justify-around items-center gap-x-28">
         <div className="">
-          <p className="text-sky-100 font-semibold text-xl">
+          <p className="text-sky-100 font-semibold text-xl text-center">
             Select Matches in a Round
           </p>
+
           <div className="w-full mt-2 mb-5">
             <select
               className="block appearance-none w-full bg-slate-700 border border-slate-700 text-sky-200 font-semibold py-3 px-4 rounded leading-tight focus:outline-none focus:bg-slate-700 focus:border-slate-700 focus:text-sky-200"
@@ -108,12 +106,21 @@ const Board = () => {
               <option value={10}>10</option>
             </select>
           </div>
-          <button
-            onClick={handleStart}
-            className="px-6 py-2 text-white text-xl font-semibold rounded-sm bg-sky-500 hover:bg-sky-600"
-          >
-            Start
-          </button>
+
+          {!roundOpen && (
+            <button
+              onClick={handleStart}
+              className="px-6 py-2 text-white text-xl font-semibold rounded-sm bg-sky-500 hover:bg-sky-600"
+            >
+              Start
+            </button>
+          )}
+
+          {roundOpen && (
+            <p className="text-sky-100 font-semibold text-xl text-center">
+              Round {roundNumber}
+            </p>
+          )}
         </div>
         <div>
           {!gameComplete && (
