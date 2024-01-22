@@ -12,6 +12,7 @@ const Board = () => {
   const [roundOpen, setRoundOpen] = useState(false);
   let [roundNumber, setRoundNumber] = useState(1);
 
+  //   winning conditions
   const winConditions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -23,6 +24,7 @@ const Board = () => {
     [2, 4, 6],
   ];
 
+  //check winner or not
   const checkWinner = (board) => {
     for (let i = 0; i < winConditions.length; i++) {
       const [x, y, z] = winConditions[i];
@@ -43,6 +45,7 @@ const Board = () => {
     return null; // No win
   };
 
+  //every click button
   const handleClick = (clickedIdx) => {
     const newBoard = board.map((value, idx) => {
       if (idx === clickedIdx) {
@@ -68,6 +71,7 @@ const Board = () => {
     setPlayerX(!playerX);
   };
 
+  //   reset button
   const handleReset = () => {
     setGameComplete(false);
     setBoard(Array(9).fill(null));
@@ -79,13 +83,16 @@ const Board = () => {
     console.log(roundNumber);
   };
 
-  const roundRef = useRef(null);
+  //   new round
   const handleNewRound = () => {
     setScores({ xScore: 0, oScore: 0 });
     setRoundOpen(false); //TODO
     setRoundNumber(1);
     setBoard(Array(9).fill(null));
   };
+
+  //start round
+  const roundRef = useRef(null);
   const handleStart = () => {
     setRoundMatches(roundRef.current.value);
     setRoundOpen(true);
@@ -126,14 +133,14 @@ const Board = () => {
 
           {roundOpen && (
             <>
-              <p className="text-sky-200 font-semibold text-2xl text-center">
+              <p className="text-sky-200 font-semibold text-xl text-center">
                 Round {roundNumber} of {roundMatches}
               </p>
-              <div className="flex items-center justify-around flex-col mt-5">
+              <div className="flex items-center justify-around flex-col mt-7">
                 <p className="text-sky-500 font-semibold text-xl text-center">
                   X score: {scores.xScore}
                 </p>
-                <p className="text-orange-500 font-semibold text-xl text-center">
+                <p className="text-orange-500 font-semibold text-xl text-center my-2">
                   O score: {scores.oScore}
                 </p>
               </div>
