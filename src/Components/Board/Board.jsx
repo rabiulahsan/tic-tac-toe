@@ -88,20 +88,25 @@ const Board = () => {
   useEffect(() => {
     if (roundMatches == roundNumber) {
       setDisable(true);
+    } else {
+      return;
     }
   }, [roundMatches, roundNumber]);
 
   //   new round
   const handleNewRound = () => {
-    setScores({ xScore: 0, oScore: 0 });
+    setGameComplete(false);
     setRoundOpen(false); //TODO
     setRoundNumber(1);
+    setDisable(false);
     setBoard(Array(9).fill(null));
   };
 
   //start round
   const roundRef = useRef(null);
   const handleStart = () => {
+    setGameComplete(false);
+    setScores({ xScore: 0, oScore: 0 });
     setRoundMatches(roundRef.current.value);
     setRoundOpen(true);
     setRoundNumber(1);
@@ -152,11 +157,19 @@ const Board = () => {
                   O score: {scores.oScore}
                 </p>
               </div>
-              {scores.xScore === scores.oScore
-                ? "Match Draw"
-                : scores.oScore > scores.xScore
-                ? "O"
-                : "X"}
+              {scores.xScore === scores.oScore ? (
+                <p className="font-semibold text-2xl text-white text-center">
+                  Round Drawn
+                </p>
+              ) : scores.oScore > scores.xScore ? (
+                <p className="text-orange-500 font-semibold text-xl text-center my-2">
+                  Round Winner O
+                </p>
+              ) : (
+                <p className="text-sky-500 font-semibold text-xl text-center">
+                  Round Winner X
+                </p>
+              )}
             </>
           )}
         </div>
