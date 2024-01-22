@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "./Box";
 
 /* eslint-disable react/prop-types */
@@ -34,7 +34,6 @@ const Board = () => {
   };
 
   const handleClick = (clickedIdx) => {
-    console.log(board);
     const newBoard = board.map((value, idx) => {
       if (idx === clickedIdx) {
         return playerX ? "X" : "O";
@@ -48,6 +47,17 @@ const Board = () => {
 
     setPlayerX(!playerX);
   };
+
+  useEffect(() => {
+    console.log(board);
+
+    if (board.includes(null)) {
+      setGameComplete(false);
+    } else {
+      setGameComplete(true);
+    }
+    console.log(gameComplete);
+  }, [board, gameComplete]);
 
   const handleReset = () => {
     setGameComplete(false);
@@ -65,6 +75,22 @@ const Board = () => {
           >
             Winner is player {currentWinner}
           </p>
+        </div>
+      )}
+
+      {gameComplete && currentWinner ? (
+        <div className="my-5">
+          <p
+            className={`font-semibold text-2xl ${
+              currentWinner === "X" ? "text-sky-500" : "text-orange-500"
+            }`}
+          >
+            Winner is player {currentWinner}
+          </p>
+        </div>
+      ) : (
+        <div className="my-5">
+          <p className="font-semibold text-2xl text-white">Match Drawn</p>
         </div>
       )}
       <div className="grid grid-cols-3 gap-2">
