@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Box from "./Box";
 
 /* eslint-disable react/prop-types */
@@ -8,6 +8,9 @@ const Board = () => {
   const [gameComplete, setGameComplete] = useState(false);
   //   const [scores, setScores] = useState({ xScore: 0, oScore: 0 });
   const [currentWinner, setCurrentWinner] = useState("");
+  const [rountMatches, setRoundMatches] = useState();
+  const [roundOpen, setRoundOpen] = useState(false);
+  let [roundNumber, setRoundNumber] = useState(1);
 
   const winConditions = [
     [0, 1, 2],
@@ -58,10 +61,24 @@ const Board = () => {
   const handleReset = () => {
     setGameComplete(false);
     setBoard(Array(9).fill(null));
+    setRoundNumber(roundNumber + 1);
+    console.log(roundNumber);
   };
 
-  const handleResetRound = () => {};
-  const handleStart = () => {};
+  const roundRef = useRef(null);
+  const handleResetRound = () => {
+    setRoundOpen(false); //TODO
+    setRoundNumber(1);
+  };
+  const handleStart = () => {
+    if (roundOpen) {
+      alert("arey bhai"); //TODO
+    }
+    setRoundMatches(roundRef.current.value);
+    setRoundOpen(true);
+    setRoundNumber(1);
+  };
+  console.log(roundOpen, rountMatches);
 
   return (
     <>
@@ -74,6 +91,7 @@ const Board = () => {
             <select
               className="block appearance-none w-full bg-slate-700 border border-slate-700 text-sky-200 font-semibold py-3 px-4 rounded leading-tight focus:outline-none focus:bg-slate-700 focus:border-slate-700 focus:text-sky-200"
               id="grid-state"
+              ref={roundRef}
             >
               <option value={3}>3</option>
               <option value={5}>5</option>
