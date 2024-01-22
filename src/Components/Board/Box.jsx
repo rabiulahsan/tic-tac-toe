@@ -1,8 +1,12 @@
 /* eslint-disable react/prop-types */
-const Box = ({ value, idx }) => {
-  console.log(idx, value);
+const Box = ({ value, idx, handleClick }) => {
   return (
-    <div className="px-7 py-4 rounded text-3xl  text-orange-500 bg-slate-700">
+    <div
+      onClick={() => handleClick(idx)}
+      className={`h-[80px] w-[80px] rounded text-3xl font-semibold   bg-slate-700 cursor-pointer text-center pt-6 ${
+        value === "X" ? "text-green-500" : "text-orange-500"
+      }`}
+    >
       {value}
     </div>
   );
