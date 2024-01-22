@@ -6,7 +6,7 @@ const Board = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [playerX, setPlayerX] = useState(true);
   const [gameComplete, setGameComplete] = useState(false);
-  //   const [scores, setScores] = useState({ xScore: 0, oScore: 0 });
+  const [scores, setScores] = useState({ xScore: 0, oScore: 0 });
   const [currentWinner, setCurrentWinner] = useState("");
   const [rountMatches, setRoundMatches] = useState();
   const [roundOpen, setRoundOpen] = useState(false);
@@ -54,7 +54,17 @@ const Board = () => {
     setBoard(newBoard, ...board);
     const winner = checkWinner(newBoard);
     setCurrentWinner(winner);
-
+    if (winner) {
+      if (winner === "O") {
+        let { oScore } = scores;
+        oScore += 1;
+        setScores({ ...scores, oScore });
+      } else {
+        let { xScore } = scores;
+        xScore += 1;
+        setScores({ ...scores, xScore });
+      }
+    }
     setPlayerX(!playerX);
   };
 
