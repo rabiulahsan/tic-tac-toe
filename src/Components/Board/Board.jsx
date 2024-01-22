@@ -45,17 +45,7 @@ const Board = () => {
     setBoard(newBoard, ...board);
     const winner = checkWinner(newBoard);
     setCurrentWinner(winner);
-    // if (winner) {
-    //   if (winner === "O") {
-    //     let { oScore } = scores;
-    //     oScore += 1;
-    //     setScores({ ...scores, oScore });
-    //   } else {
-    //     let { xScore } = scores;
-    //     xScore += 1;
-    //     setScores({ ...scores, xScore });
-    //   }
-    // }
+
     setPlayerX(!playerX);
   };
 
